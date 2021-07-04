@@ -1,0 +1,14 @@
+.app {
+	display: flex;
+	height: 100%;
+	.menu {
+		flex: 0 0 auto;
+		width: 200px;
+		height: 100%;
+	}
+	.container {
+		flex: 1 1 auto;
+		height: 100%;
+		overflow-y: auto;
+	}
+}
