@@ -4,12 +4,10 @@
   "description": "electron +  react +ts项目",
   "main": "build/index.js",
   "scripts": {
-    "start-electron": "NODE_ENV=development electron .",
-    "start": "electron .",
+    "start": "NODE_ENV=development electron .",
     "dev:renderer": "cross-env NODE_ENV=development webpack -p --config webpack.renderer.config.js --env=dev --debug --watch --progress --colors",
     "build-render": "cross-env NODE_ENV=production webpack -p --config webpack.renderer.config.js",
-    "build-main": "webpack  --config webpack.main.config.js",
-    "build": "npm install && npm run build-render && npm run build-main && npm run build-electron"
+    "build-main": "webpack  --config webpack.main.config.js"
   },
   "repository": {
     "type": "git",

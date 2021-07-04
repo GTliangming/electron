@@ -62,11 +62,6 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    after() {
-      spawn('npm', ['run', 'start-electron-with-nodemon'])
-    }
-  },
   optimization: {
     minimizer: isDev ? [] : [new UglifyJSPlugin()]
   },
