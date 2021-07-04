@@ -4,10 +4,14 @@
   "description": "electron +  react +ts项目",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "start-electron-with-nodemon": "nodemon --watch ./src/index.tsx --exec 'npm run start-electron'",
-    "prestart": "webpack --config webpack.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-electron": "npm run build-main && ENV=development electron .",
+    "start-electron-with-nodemon": "nodemon --watch main.ts --exec 'npm run start-electron'",
+    "start": "webpack-dev-server --config webpack.renderer.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-render": "webpack --config webpack.renderer.config.js",
+    "build-main": "webpack --config webpack.main.config.js",
+    "build-electron": "electron-builder build -m",
+    "build": "npm install && npm run build-render && npm run build-main && npm run build-electron"
   },
   "repository": {
     "type": "git",
@@ -28,7 +32,8 @@
     "@types/react": "^17.0.13",
     "@types/react-dom": "^17.0.8",
     "css-loader": "^5.2.6",
-    "electron": "^13.1.5",
+    "electron": "11.0.0",
+    "electron-builder": "^22.11.7",
     "html-webpack-plugin": "^5.3.2",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.9",
@@ -39,5 +44,39 @@
     "webpack": "^5.42.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+  },
+  "build": {
+    "productName": "electron-demos",
+    "files": [
+      "dist/",
+      "main.js"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "directories": {
+      "output": "release"
+    }
   }
 }

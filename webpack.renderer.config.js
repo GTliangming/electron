@@ -8,6 +8,7 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  devtool: 'source-map',
   target: 'electron-renderer',
   module: {
     rules: [
@@ -30,14 +31,14 @@ module.exports = {
     port: 3000,
     after() {
       spawn('npm', ['run', 'start-electron-with-nodemon']),
-        spawn('npm', ['run', 'start-electron'], {
-          shell: true,
-          env: process.env,
-          stdio: 'inherit'
-        })
-          .on('close', code => process.exit(code))
-          .on('error', spawnError => console.error(spawnError))
-      },
+      spawn('npm', ['run', 'start-electron'], {
+        shell: true,
+        env: process.env,
+        stdio: 'inherit'
+      })
+        .on('close', code => process.exit(code))
+        .on('error', spawnError => console.error(spawnError))
+    },
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
