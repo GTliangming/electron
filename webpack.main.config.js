@@ -1,28 +1,47 @@
-const path = require('path');
+const path = require("path");
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
-  target: 'electron-main',
-  mode: 'development',
-  entry: './main.ts',
-  output: {
-    filename: './main.js',
-    path: path.resolve(__dirname, '')
-  },
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['.ts', '.js'],
-  },
-  devtool: 'source-map',
-  node: {
-    __dirname: false,
-    __filename: false
-  },
+	entry: {
+		index: path.resolve(__dirname, "./main-process/main"),
+	},
+	output: {
+		path: path.resolve(__dirname, "./build"),
+		publicPath: "/",
+	},
+	mode: "production",
+	devtool: "source-map",
+	resolve: {
+		extensions: [".js", ".jsx"],
+		modules: [
+			path.resolve(__dirname, "main-process"),
+			"node_modules"
+		]
+	},
+	target: "electron-main",
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				use: [
+					{
+						loader: "thread",
+						options: {
+							workers: require("os").cpus().length - 1
+						}
+					},
+					"babel"
+				]
+			},
+		],
+	},
+	node: {
+		__dirname: false,
+	},
+	optimization: {
+		minimizer: [new UglifyJSPlugin()]
+	},
+	resolveLoader: {
+		moduleExtensions: ["-loader"]
+	},
 }

@@ -1,54 +1,76 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const spawn = require('child_process').spawn;
+const path = require("path");
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+
+const isDev = process.env.NODE_ENV !== "production";
+
 module.exports = {
-  mode: 'development',
-  entry: './src/index.tsx',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+  entry: {
+    main: path.resolve(__dirname, "./src"),
   },
-  devtool: 'source-map',
-  target: 'electron-renderer',
+  output: {
+    path: path.resolve(__dirname, "./build"),
+    publicPath: "/",
+  },
+  mode: isDev ? "development" : "production",
+  devtool: isDev ? "inline-source-map" : "source-map",
+  resolve: {
+    extensions: [".webpack.js", ".js", ".jsx", ".tsx", ".ts"],
+    modules: [
+      path.resolve(__dirname, "src"),
+      "node_modules"
+    ]
+  },
+  target: "electron-renderer",
+  node: {
+    __dirname: false,
+  },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        use: [
+          {
+            loader: "thread",
+            options: {
+              workers: require("os").cpus().length - 1
+            }
+          },
+          "babel"
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: ["style", "css", "postcss"]
       },
       {
         test: /\.scss$/,
+        include: path.join(__dirname, "./src"),
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
+          "style",
+          {
+            loader: "css",
+            options: {
+              modules: {
+                mode: 'local',
+                localIdentName: "[local]_[hash:base64:5]",
+              },
+              importLoaders: 1
+            }
+          },
+          "postcss"
         ]
-      }
-    ]
+      },
+    ],
   },
   devServer: {
-    port: 3000,
     after() {
-      spawn('npm', ['run', 'start-electron-with-nodemon']),
-      spawn('npm', ['run', 'start-electron'], {
-        shell: true,
-        env: process.env,
-        stdio: 'inherit'
-      })
-        .on('close', code => process.exit(code))
-        .on('error', spawnError => console.error(spawnError))
-    },
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-    alias: {
-      "@components": path.resolve(__dirname, 'src/components/')
+      spawn('npm', ['run', 'start-electron-with-nodemon'])
     }
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './index.html'
-    })
-  ]
+  optimization: {
+    minimizer: isDev ? [] : [new UglifyJSPlugin()]
+  },
+  resolveLoader: {
+    moduleExtensions: ["-loader"]
+  },
 }

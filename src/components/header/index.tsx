@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { remote, ipcRenderer } from 'electron';
 import FileList from '../file-list'
-import './index.scss';
 
 const { Notification, dialog } = require("electron");
 
@@ -32,7 +31,7 @@ class App extends Component {
       <React.Fragment>
         <FileList />
         <br /> <hr />
-        <button onClick={this.onSendMessageToMain}>与主进程通行</button>
+        <button onClick={this.onSendMessageToMain}>与主进3程通行2</button>
         <br /> <br />
         <button onClick={this.onShowNotification}>使用 remote 直接调用主进程模块</button>
       </React.Fragment>

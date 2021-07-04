@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { remote, OpenDialogReturnValue } from 'electron';
-import './index.scss';
+import { OpenDialogReturnValue } from 'electron';
 
 const path = require("path");
 const fs = require('fs');
@@ -66,15 +65,15 @@ class FileList extends Component<any, IState> {
   render() {
     return (
       <React.Fragment>
-        <button onClick={this.onChooseFile}>选择要展示的文件夹</button>
+        <button onClick={this.onChooseFile}>选择要展示的文3件夹</button>
         <div>当前文件夹路径：{this.state.path}</div>
-        <div>文件夹下文件列表：</div>
-        <div>hahahah</div>
-        <div className="file-list">
+        <div>文件夹下文件列表：2</div>
+        <div>hahahah2</div>
+        <div >
           {
             this.state.data.map(file => {
               return (
-                <div key={file} className="file-item">
+                <div key={file} >
                   <span>{file}</span>
                 </div>
               )
@@ -83,7 +82,7 @@ class FileList extends Component<any, IState> {
         </div>
         <div>
           <div>
-            文件名称：
+            文件名称：3
             <input
               type="text"
               value={this.state.addFileName}

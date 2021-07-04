@@ -1,19 +1,30 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
-        "module": "es6",
-        "target": "es5",
-        "jsx": "react",
-        "allowJs": true,
-        "baseUrl": "./",
-        "paths": {
-            "@components/*": [
-              "src/components/*"
-            ]
-          }
-    }
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
+    "baseUrl": "src",
+  },
+  "include": [
+		"./src/**/*.js",
+		"./src/**/*.jsx",
+		"./src/**/*.tsx",
+		"./src/**/*.ts"
+	],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
 }
