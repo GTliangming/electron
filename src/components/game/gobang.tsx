@@ -1,13 +1,15 @@
 import * as React from "react";
 import "./gobang.css";
+import { Modal } from "antd";
+
 interface GobangState {
-  border:any;
-  chessArr:any;
-  palyArr:any;
-  chess:any;
-  row:number;
-  col:number;
-  hasWinner:any;
+  border: any;
+  chessArr: any;
+  palyArr: any;
+  chess: any;
+  row: number;
+  col: number;
+  hasWinner: any;
 }
 export class Gobang extends React.Component<{}, GobangState>{
   constructor(props) {
@@ -24,7 +26,6 @@ export class Gobang extends React.Component<{}, GobangState>{
       hasWinner: null, //是否决出胜利者
     };
   }
-
   componentDidMount() {
     //生命周期初始化棋盘数组
     let { chessArr } = this.state;
@@ -36,14 +37,41 @@ export class Gobang extends React.Component<{}, GobangState>{
       chessArr,
     });
   }
+  getWinner = (chess: number) => {
+    setTimeout(() => {
+      Modal.confirm({
+        onCancel: () => {
+          window.location.reload();
+        },
+        okText: "继续游戏",
+        cancelText: "重新开始游戏",
+        content: (
+          <div>
+            游戏结束,{chess == 1 ? "黑棋" : "白棋"}获胜！
+          </div>
+        )
+      })
+    }, 100)
+  }
 
   play = (row, col) => {
     let { palyArr, chess, hasWinner } = this.state;
     if (hasWinner) {
       setTimeout(() => {
-        let r = window.confirm("Winner:  " + `${hasWinner == 1 ? "黑棋" : "白棋"}` + "\n" + "是否再来一把？")
-        if (r) window.location.reload()
-      }, 0)
+        setTimeout(() => {
+          Modal.confirm({
+            onOk: () => {
+              window.location.reload();
+            },
+            content: (
+              <div>
+                {chess == 1 ? "黑棋" : "白棋"}获胜！,是否再来一把
+              </div>
+            )
+          })
+        }, 100)
+        return;
+      }, 100)
       return;
     }
     chess = chess === 1 ? 2 : 1;
@@ -74,10 +102,7 @@ export class Gobang extends React.Component<{}, GobangState>{
           colCount++;
         }
         if (colCount >= 4) {
-          setTimeout(() => {
-            let r = window.confirm("Winner:  " + `${chess == 1 ? "黑棋" : "白棋"}` + "\n" + "是否再来一把？")
-            if (r) window.location.reload();
-          }, 0)
+          this.getWinner(chess);
           colCount = 0;
           this.setState({
             hasWinner: chess
@@ -94,10 +119,7 @@ export class Gobang extends React.Component<{}, GobangState>{
           rowCount++;
         }
         if (rowCount >= 4) {
-          setTimeout(() => {
-            let r = window.confirm("Winner:  " + `${chess == 1 ? "黑棋" : "白棋"}` + "\n" + "是否再来一把？")
-            if (r) window.location.reload();
-          }, 0)
+          this.getWinner(chess);
           rowCount = 0;
           this.setState({
             hasWinner: chess
@@ -114,10 +136,7 @@ export class Gobang extends React.Component<{}, GobangState>{
           leftObliqueCount++;
         }
         if (leftObliqueCount >= 4) {
-          setTimeout(() => {
-            let r = window.confirm("Winner:  " + `${chess == 1 ? "黑棋" : "白棋"}` + "\n" + "是否再来一把？")
-            if (r) window.location.reload();
-          }, 0)
+          this.getWinner(chess);
           leftObliqueCount = 0;
           this.setState({
             hasWinner: chess
@@ -134,10 +153,7 @@ export class Gobang extends React.Component<{}, GobangState>{
           rightObliqueCount++;
         }
         if (rightObliqueCount >= 4) {
-          setTimeout(() => {
-            let r = window.confirm("Winner:  " + `${chess == 1 ? "黑棋" : "白棋"}` + "\n" + "是否再来一把？")
-            if (r) window.location.reload();
-          }, 0)
+          this.getWinner(chess);
           rightObliqueCount = 0;
           this.setState({
             hasWinner: chess
@@ -153,6 +169,7 @@ export class Gobang extends React.Component<{}, GobangState>{
     const { border, palyArr } = this.state;
     return (
       <div className="chessboard-wrapper">
+        <h3 className="title">休闲益智五子棋</h3>
         <div className="chessboard">
           {border.map((row, rowIndex) => (
             <div className="chessboard-row" key={`row + ${rowIndex}`}>

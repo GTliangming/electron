@@ -19,6 +19,12 @@ class IMenu extends React.PureComponent<RouteComponentProps> {
 					<Menu.Item key="/game">
 						<Link to="/game">五子棋</Link>
 					</Menu.Item>
+					<Menu.Item key="/test" >
+						<Link to="/test">测试</Link>
+					</Menu.Item>
+					<Menu.Item key="/file-list" >
+						<Link to="/file-list">文件上传</Link>
+					</Menu.Item>
 				</Menu.SubMenu>
 			</Menu>
 		);

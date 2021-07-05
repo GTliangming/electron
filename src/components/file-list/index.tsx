@@ -3,7 +3,9 @@ import { OpenDialogReturnValue } from 'electron';
 
 const path = require("path");
 const fs = require('fs');
-const { Notification, dialog } = require("electron");
+const { dialog ,Notification} = require("electron").remote;
+
+
 const readDistFiles = (path: string, callBack: (data: string[]) => void) => {
   fs.readdir(path, (err: any, files: any) => {
     const data: string[] = [];
@@ -82,7 +84,7 @@ class FileList extends Component<any, IState> {
         </div>
         <div>
           <div>
-            文件名称：3
+            文件名称:
             <input
               type="text"
               value={this.state.addFileName}

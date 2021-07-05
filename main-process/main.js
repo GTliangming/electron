@@ -22,7 +22,8 @@ function createMainWindow() {
     width: 1024,
     height: 768,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true 
     }
   });
 
@@ -83,4 +84,4 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-// require("./ipc");
+require("./api");
