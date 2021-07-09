@@ -2,13 +2,33 @@
   "name": "myelectronapp",
   "version": "1.0.0",
   "description": "electron +  react +ts项目",
-  "main": "build/index.js",
+  "main": "./build/index.js",
   "scripts": {
     "start": "NODE_ENV=development electron .",
     "dev:renderer": "cross-env NODE_ENV=development webpack -p --config webpack.renderer.config.js --env=dev --debug --watch --progress --colors",
     "build-render": "cross-env NODE_ENV=production webpack -p --config webpack.renderer.config.js",
-    "build-main": "webpack  --config webpack.main.config.js"
+    "build-main": "webpack  --config webpack.main.config.js",
+    "package:m1": "electron-packager . games --out dist/ --platform darwin --arch arm64 --overwrite --ignore=node_modules/* --ignore=.git --ignore=.idea --ignore=.vscode --ignore=dist --ignore=main-process --ignore=src",
+    "pack:mac": "electron-packager . games --out dist/ --overwrite --ignore=node_modules/* --ignore=.git --ignore=.idea --ignore=.vscode --ignore=dist --ignore=main-process --ignore=src",
+    "pack:win": "electron-packager . games --out dist/ --platform win32 --arch x64 --overwrite --ignore=node_modules/* --ignore=.git --ignore=.idea --ignore=.vscode --ignore=dist --ignore=main-process --ignore=src",
+    "dist": "electron-builder --arm64 "
   },
+  "build": {
+    "productName": "games",
+    "appId": "com.games.app",
+    "copyright": "liangming",
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "files": [
+      "build/*"
+    ],
+    "directories": {
+      "output": "dist"
+    }
+  },  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GTliangming/electron.git"
@@ -42,6 +62,8 @@
     "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
     "electron": "11.0.0",
+    "electron-builder": "^22.11.7",
+    "electron-packager": "^15.2.0",
     "nodemon": "^2.0.9",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.2",
@@ -52,5 +74,5 @@
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8"
-  }  
+  }
 }
