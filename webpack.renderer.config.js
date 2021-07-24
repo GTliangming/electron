@@ -60,6 +60,20 @@ module.exports = {
           "postcss"
         ]
       },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              esModule: false,
+              limit: 10240,
+              name: "[name]_[hash:base64:5].[ext]",
+              outputPath: "images/",
+            }
+          }
+        ]
+      },
     ],
   },
   optimization: {

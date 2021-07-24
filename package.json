@@ -2,7 +2,7 @@
   "name": "myelectronapp",
   "version": "1.0.0",
   "description": "electron +  react +ts项目",
-  "main": "./build/index.js",
+  "main": "build/index.js",
   "scripts": {
     "start": "NODE_ENV=development electron .",
     "dev:renderer": "cross-env NODE_ENV=development webpack -p --config webpack.renderer.config.js --env=dev --debug --watch --progress --colors",
@@ -28,7 +28,7 @@
     "directories": {
       "output": "dist"
     }
-  },  
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GTliangming/electron.git"
@@ -64,14 +64,17 @@
     "electron": "11.0.0",
     "electron-builder": "^22.11.7",
     "electron-packager": "^15.2.0",
+    "file-loader": "^6.2.0",
     "nodemon": "^2.0.9",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.2",
     "postcss-simple-vars": "^5.0.2",
+    "sass-loader": "^12.1.0",
     "style-loader": "^1.0.0",
     "thread-loader": "^2.1.3",
     "typescript": "^3.6.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^4.1.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8"
   }
