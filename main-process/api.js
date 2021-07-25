@@ -1,4 +1,4 @@
-const { ipcMain, dialog } = require("electron");
+const { ipcMain } = require("electron");
 const fs = require("fs");
 const path = require('path');
 const https = require('https');

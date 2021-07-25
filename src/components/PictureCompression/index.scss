@@ -5,15 +5,16 @@
 .topConter{
     width: 100%;
     margin-top: 15px;
-    background: rgb(238, 242, 245);
     border-radius: 12px;
     overflow: hidden;
-    height: 276px;
     padding: 10px 0;
+    &>button{
+        margin: 10px 0;
+        margin-right: 20px;
+    }
 }
 .leftImg{
     width: 269px;
-    background-image: url("./images/panda-chewing.png");
     background-size: contain;
     background-repeat: no-repeat;
 }

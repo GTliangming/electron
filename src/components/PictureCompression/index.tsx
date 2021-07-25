@@ -1,4 +1,4 @@
-import { Button, Input, message, Table } from "antd";
+import { Button, message, Table } from "antd";
 import { ColumnProps } from "antd/lib/table";
 import * as React from "react";
 import openDirectory from "utils/openDirectory";
@@ -78,10 +78,9 @@ export default class Picture extends React.Component<{}, PictureState> {
         ]
         return (
             <div className={styles.conter}>
+                <h2 className={styles.title}>TinyPNG 图片压缩</h2>
+                <p>单次最多上传10张！最大5M</p>
                 <div className={styles.topConter}>
-                    <div className={styles.leftImg} />
-                    <img src="./images/bamboo.png" alt="" />
-
                     <Button onClick={() => openDirectory("sourcePath")}>打开源目录</Button>{sourcePath}
                     <br />
                     <Button onClick={() => openDirectory("targetPath")}>打开目标目录</Button>{targetPath}
