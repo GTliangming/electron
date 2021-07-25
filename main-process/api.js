@@ -62,12 +62,10 @@ ipcMain.on("picture-compression", function (event, res) {
     let resultInfo = [];
     conf.files.forEach(imgPath => {
         requestConf.headers['X-Forwarded-For'] = getRandomIP();
-        let req = https.request(requestConf, async (res) => {
-            await res.on('data', buf => {
-                console.log(2);
+        let req = https.request(requestConf, (res) => {
+            res.on('data', buf => {
                 let obj = JSON.parse(buf.toString());
                 if (obj.error) {
-                    console.log(3);
                     conf.files = [];
                     event.sender.send("picture-compression-end", { result: false, msg: `压缩失败！\n 当前文件：${imgPath} \n ${obj.message}` })
                 } else {
@@ -86,25 +84,22 @@ ipcMain.on("picture-compression", function (event, res) {
                         OriginalSize: `${(obj.input.size / 1024).toFixed(2)}KB `,
                         CompressedSize: `${(obj.output.size / 1024).toFixed(2)}KB`,
                     }
-                    // console.log(22222, resultItem);
                     resultInfo.push(resultItem)
                     console.log("resultInfo", resultInfo)
 
                     //通过流的方式，把图片写到本地
                     readStream.pipe(fs.createWriteStream(targetPath + resultItem.imgName));
-
+                    conf.files = [];
+                    event.sender.send("picture-compression-end", { result: true, msg: `文件压缩成功！`, value: resultInfo })
                 }
             });
-            console.log(2);
-            req.write(fs.readFileSync(imgPath), 'binary');
-            req.on('error', e => {
-                console.error(e);
-            });
-            req.end();
-
-            // conf.files = [];
-            // event.sender.send("picture-compression-end", { result: true, msg: `文件压缩成功！`, value: resultInfo })
         });
+        console.log(2);
+        req.write(fs.readFileSync(imgPath), 'binary');
+        req.on('error', e => {
+            console.error(e);
+        });
+        req.end();
     });
 
 });
